@@ -22,6 +22,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use core_h5p\local\langplugin\languages;
+
 defined('MOODLE_INTERNAL') || die();
 
 // H5P overview.
@@ -35,10 +37,21 @@ $ADMIN->add('h5p', new admin_externalpage('h5pmanagelibraries', get_string('h5pm
 // H5P settings.
 $defaulth5plib = \core_h5p\local\library\autoloader::get_default_handler_library();
 if (!empty($defaulth5plib)) {
-    // As for now this page only has this setting, it will be hidden if there isn't any H5P libraries handler defined.
+    // As for now this page will be hidden if there isn't any H5P libraries handler defined.
     $settings = new admin_settingpage('h5psettings', new lang_string('h5psettings', 'core_h5p'));
     $ADMIN->add('h5p', $settings);
 
     $settings->add(new admin_settings_h5plib_handler_select('h5plibraryhandler', new lang_string('h5plibraryhandler', 'core_h5p'),
         new lang_string('h5plibraryhandler_help', 'core_h5p'), $defaulth5plib));
+
+    // Language plugin settings
+    $settings->add(new admin_setting_configcheckbox('h5p_languageplugin_enabled', new lang_string('languageplugin', 'core_h5p'),
+        new lang_string('languageplugin_help', 'core_h5p'), 0));
+
+    $settings->add(new admin_setting_configmultiselect('h5p_languageplugin_languages', new lang_string('languageplugin_languages', 'core_h5p'),
+        new lang_string('languageplugin_languages_help', 'core_h5p'), ['en'], languages::get_available_languages()));
+
+    $settings->hide_if('h5p_languageplugin_languages', 'h5p_languageplugin_enabled', 'eq', '0');
+
+
 }
