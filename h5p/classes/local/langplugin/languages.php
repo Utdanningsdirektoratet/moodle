@@ -232,4 +232,35 @@ class languages
             'zu' => 'Zulu (isiZulu)'
         ];
     }
+
+    /**
+     * Returns the list of enabled languages.
+     *
+     * @return array with the format: languagecode => language name
+     */
+    public static function get_enabled_languages(): array
+    {
+        global $CFG;
+        $enabledCodes = $CFG->h5p_languageplugin_languages;
+        $enabledCodes = explode(',', $enabledCodes);
+        $availableLanguages = self::get_available_languages();
+        $enabledLanguages = [];
+        foreach ($enabledCodes as $code) {
+            if (empty($code)) {
+                continue;
+            }
+            $enabledLanguages[$code] = $availableLanguages[$code];
+        }
+        return $enabledLanguages;
+    }
+
+    public static function get_enabled_languages_as_ckeditor_array(): array
+    {
+        $enabledLanguages = self::get_enabled_languages();
+        $arr = [];
+        foreach ($enabledLanguages as $code => $name) {
+            $arr[] = "$code:$name";
+        }
+        return $arr;
+    }
 }
