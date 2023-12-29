@@ -24,6 +24,7 @@
 
 namespace core_h5p;
 
+use core_h5p\local\langplugin\languages;
 use core_h5p\local\library\autoloader;
 use core_h5p\output\h5peditor as editor_renderer;
 use Moodle\H5PCore;
@@ -369,6 +370,16 @@ class editor {
             if ($script !== 'scripts/h5peditor-editor.js') {
                 $assets['js'][] = $url . $script . $cachebuster;
             }
+        }
+
+        // If the language plugin is enabled, add it and make the enabled languages available to JS.
+        if (!empty($CFG->h5p_languageplugin_enabled)) {
+            $assets['js'][] = '/h5p/js/h5p_lang_plugin.js' . $cachebuster;
+            $languages = languages::get_enabled_languages_as_ckeditor_array();
+            if (empty($languages)) {
+                $languages = ['en:English']; // Default language.
+            }
+            $PAGE->requires->data_for_js('H5PIntegration.languagePluginEnabledLanguages', $languages);
         }
 
         // Add JavaScript with library framework integration (editor part).
