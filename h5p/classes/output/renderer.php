@@ -123,6 +123,11 @@ class renderer extends plugin_renderer_base {
      * @param int $minorversion Minor version of library
      */
     public function h5p_alter_semantics(&$semantics, $name, $majorversion, $minorversion) {
+        global $CFG;
+        if ($name === 'H5P.AdvancedText' && $CFG->h5p_languageplugin_enabled) {
+            // The Language plugin requires the text tag to be present.
+            $semantics[0]->tags[] = 'text';
+        }
     }
 
     /**
