@@ -49,7 +49,7 @@ if (!empty($defaulth5plib)) {
         new lang_string('languageplugin_help', 'core_h5p'), 0));
 
     $settings->add(new admin_setting_configmultiselect('h5p_languageplugin_languages', new lang_string('languageplugin_languages', 'core_h5p'),
-        new lang_string('languageplugin_languages_help', 'core_h5p'), ['en'], languages::get_available_languages()));
+        new lang_string('languageplugin_languages_help', 'core_h5p'), ['en'], languages::get_available_languages_as_key_string_array()));
 
     $settings->hide_if('h5p_languageplugin_languages', 'h5p_languageplugin_enabled', 'eq', '0');
 
