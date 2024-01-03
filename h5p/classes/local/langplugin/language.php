@@ -24,6 +24,12 @@
 
 namespace core_h5p\local\langplugin;
 
+/**
+ * Language for CKEditor Language Plugin.
+ *
+ * @package    core_h5p
+ * @since      Moodle 4.1
+ */
 class language {
     /**
      * @var string Language code.
