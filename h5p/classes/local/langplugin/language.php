@@ -24,8 +24,7 @@
 
 namespace core_h5p\local\langplugin;
 
-class language
-{
+class language {
     /**
      * @var string Language code.
      */
@@ -47,8 +46,7 @@ class language
      * @param string $name Language name.
      * @param bool $rtl Language direction is right to left (default false).
      */
-    public function __construct(string $code, string $name, bool $rtl = false)
-    {
+    public function __construct(string $code, string $name, bool $rtl = false) {
         $this->code = $code;
         $this->name = $name;
         $this->rtl = $rtl;
