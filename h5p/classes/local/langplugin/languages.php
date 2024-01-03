@@ -24,8 +24,7 @@
 
 namespace core_h5p\local\langplugin;
 
-class languages
-{
+class languages {
 
     /**
      * Returns the list of available languages.
@@ -33,8 +32,7 @@ class languages
      * @return array with the format: ["language-code" => language, ...]
      * @see language
      */
-    public static function get_available_languages(): array
-    {
+    public static function get_available_languages(): array {
         return [
             'aa' => new language('aa', 'Afar'),
             'ab' => new language('ab', 'Abkhazian (аҧсуа бызшәа)'),
@@ -227,7 +225,7 @@ class languages
             'zh-hans' => new language('zh-hans', 'Chinese, Simplified (简体中文)'),
             'zh-hant' => new language('zh-hant', 'Chinese, Traditional (繁體中文)'),
             'zh-tw' => new language('zh-tw', 'Chinese, Taiwan, Traditional'),
-            'zu' => new language('zu', 'Zulu (isiZulu)')
+            'zu' => new language('zu', 'Zulu (isiZulu)'),
         ];
     }
 
@@ -241,14 +239,10 @@ class languages
      * @return array with the format: ["language-code" => "language-name", ...]
      * @see get_available_languages()
      */
-    public static function get_available_languages_as_key_string_array(): array
-    {
-        $availableLanguages = self::get_available_languages();
+    public static function get_available_languages_as_key_string_array(): array {
+        $available_languages = self::get_available_languages();
         $arr = [];
-        foreach ($availableLanguages as $lang) {
-            /**
-             * @var language $lang
-             */
+        foreach ($available_languages as $lang) {
             $arr[$lang->code] = $lang->name;
         }
         return $arr;
@@ -263,19 +257,18 @@ class languages
      * @see language
      * @see get_available_languages()
      */
-    public static function get_enabled_languages(): array
-    {
+    public static function get_enabled_languages(): array {
         global $CFG;
-        $availableLanguages = self::get_available_languages();
-        $enabledLangCodes = explode(',', $CFG->h5p_languageplugin_languages);
-        $enabledLanguages = [];
-        foreach ($enabledLangCodes as $code) {
-            if (empty($code) || empty($availableLanguages[$code])) {
+        $available_languages = self::get_available_languages();
+        $enabled_lang_codes = explode(',', $CFG->h5p_languageplugin_languages);
+        $enabled_languages = [];
+        foreach ($enabled_lang_codes as $code) {
+            if (empty($code) || empty($available_languages[$code])) {
                 continue;
             }
-            $enabledLanguages[$code] = $availableLanguages[$code];
+            $enabled_languages[$code] = $available_languages[$code];
         }
-        return $enabledLanguages;
+        return $enabled_languages;
     }
 
 
@@ -286,14 +279,10 @@ class languages
      *
      * @return array with the format: ["language-code:language-name:[ltr/rtl]", ...]
      */
-    public static function get_enabled_languages_as_ckeditor_array(): array
-    {
-        $enabledLanguages = self::get_enabled_languages();
+    public static function get_enabled_languages_as_ckeditor_array(): array {
+        $enabled_languages = self::get_enabled_languages();
         $arr = [];
-        foreach ($enabledLanguages as $lang) {
-            /**
-             * @var language $lang
-             */
+        foreach ($enabled_languages as $lang) {
             $arr[] = "$lang->code:$lang->name:" . ($lang->rtl ? 'rtl' : 'ltr');
         }
         return $arr;

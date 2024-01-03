@@ -44,14 +44,14 @@ if (!empty($defaulth5plib)) {
     $settings->add(new admin_settings_h5plib_handler_select('h5plibraryhandler', new lang_string('h5plibraryhandler', 'core_h5p'),
         new lang_string('h5plibraryhandler_help', 'core_h5p'), $defaulth5plib));
 
-    // Language plugin settings
+    // Language plugin settings.
     $settings->add(new admin_setting_configcheckbox('h5p_languageplugin_enabled', new lang_string('languageplugin', 'core_h5p'),
         new lang_string('languageplugin_help', 'core_h5p'), 0));
 
+    $languages = languages::get_available_languages_as_key_string_array();
     $settings->add(new admin_setting_configmultiselect('h5p_languageplugin_languages', new lang_string('languageplugin_languages', 'core_h5p'),
-        new lang_string('languageplugin_languages_help', 'core_h5p'), ['en'], languages::get_available_languages_as_key_string_array()));
+        new lang_string('languageplugin_languages_help', 'core_h5p'), ['en'], $languages));
 
     $settings->hide_if('h5p_languageplugin_languages', 'h5p_languageplugin_enabled', 'eq', '0');
-
 
 }
